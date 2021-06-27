@@ -35,67 +35,93 @@ namespace IdadeAluno
 
         static void principal()
         {
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("|");
-            Console.ResetColor();
-            Console.Write("Digite o dia do seu nascimento (DD): ");
-            int dia = Convert.ToInt32(Console.ReadLine());
-
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("|");
-            Console.ResetColor();
-
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("|");
-            Console.ResetColor();
-            Console.Write("Digite o mês do seu nascimento (MM): ");
-            int mes = Convert.ToInt32(Console.ReadLine());
-
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("|");
-            Console.ResetColor();
-
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("|");
-            Console.ResetColor();
-            Console.Write("Digite o ano do seu nascimento (AAAA): ");
-            int ano = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine();
-
-            if (dia < 1 || dia > 31)
+            try
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Atenção!! O dia inserido não é válido.");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("|");
                 Console.ResetColor();
+                Console.Write("Digite o dia do seu nascimento (DD): ");
+                int dia = Convert.ToInt32(Console.ReadLine());
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("|");
+                Console.ResetColor();
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("|");
+                Console.ResetColor();
+                Console.Write("Digite o mês do seu nascimento (MM): ");
+                int mes = Convert.ToInt32(Console.ReadLine());
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("|");
+                Console.ResetColor();
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("|");
+                Console.ResetColor();
+                Console.Write("Digite o ano do seu nascimento (AAAA): ");
+                int ano = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine();
+
+                // if (dia < 1 || dia > 31)
+                // {
+                //     Console.ForegroundColor = ConsoleColor.Yellow;
+                //     Console.WriteLine("Atenção!! O dia inserido não é válido.");
+                //     Console.ResetColor();
+                // }
+
+                // if (mes < 1 || mes > 12)
+                // {
+                //     Console.ForegroundColor = ConsoleColor.Yellow;
+                //     Console.WriteLine("Atenção!! O mês inserido não é válido.");
+                //     Console.ResetColor();
+                // }
+
+                if (ano < 1800)
+                {
+                    throw new ArgumentException();
+                    // Console.ForegroundColor = ConsoleColor.Yellow;
+                    // Console.WriteLine("Atenção!! O ano inserido não é válido.");
+                    // Console.ResetColor();                    
+                }
+
+                DateTime dataDeNascimento = new DateTime(ano, mes, dia);
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("- ");
+                Console.ResetColor();
+                Console.Write("Você nasceu em uma ");
+                Console.WriteLine(dataDeNascimento.ToLongDateString());
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("- ");
+                Console.ResetColor();
+                Console.Write("Aniversário de 18 anos será/foi em ");
+                Console.WriteLine(dataDeNascimento.AddYears(18));
             }
 
-            if (mes < 1 || mes > 12)
+            catch (ArgumentOutOfRangeException ex)
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Atenção!! O mês inserido não é válido.");
-                Console.ResetColor();
+                Console.WriteLine($"- Menssagem: Os parâmetros do ano, mês, ou dia não correspondem a um DateTime.");
+                Console.WriteLine($"- Tipo: {ex.GetType()}");
+                Console.WriteLine();
             }
 
-            if (ano < 1)
+            catch (FormatException ex)
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Atenção!! O ano inserido não é válido.");
-                Console.ResetColor();
+                Console.WriteLine();
+                Console.WriteLine($"- Menssagem: O valor de entrada não estava no formato correto.");
+                Console.WriteLine($"- Tipo: {ex.GetType()}");
+                Console.WriteLine();
             }
 
-            DateTime dataDeNascimento = new DateTime(ano, mes, dia);
-
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("- ");
-            Console.ResetColor();
-            Console.Write("Você nasceu em uma ");
-            Console.WriteLine(dataDeNascimento.ToLongDateString());
-
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("- ");
-            Console.ResetColor();
-            Console.Write("Aniversário de 18 anos será/foi em ");
-            Console.WriteLine(dataDeNascimento.AddYears(18));
+            catch (Exception ex)
+            {
+                Console.WriteLine($"- Mensagem: Ano inferior à 1800.");
+                Console.WriteLine($"- Tipo: {ex.GetType()}");
+                Console.WriteLine();
+            }
         }
     }
 }
